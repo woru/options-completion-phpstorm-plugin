@@ -1,0 +1,27 @@
+<idea-plugin version="2" url="https://github.com/letsdrink/options-completion-phpstorm-plugin">
+    <id>com.github.woru.options-completion-phpstorm-plugin</id>
+    <name>Options completion plugin</name>
+    <version>0.0.0</version>
+    <vendor email="ouzo-framework@googlegroups.com" url="http://ouzoframework.org/">Ouzo contributors</vendor>
+
+    <description><![CDATA[
+<h1>Options completion plugin</h1>
+
+<h2>Features:</h2>
+<ul>
+    <li>Complete array keys for function parameters</li>
+</ul>
+    ]]></description>
+
+    <change-notes>
+    </change-notes>
+
+    <idea-version since-build="107.105"/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <completion.contributor language="PHP" implementationClass="com.github.woru.phpoptionscompletion.OptionsCompletionContributor"/>
+    </extensions>
+
+    <depends>com.jetbrains.php</depends>
+    <depends>com.intellij.modules.platform</depends>
+</idea-plugin>
