@@ -1,13 +1,18 @@
-<idea-plugin version="2" url="https://github.com/letsdrink/options-completion-phpstorm-plugin">
+<idea-plugin version="2" url="https://github.com/woru/options-completion-phpstorm-plugin">
     <id>com.github.woru.options-completion-phpstorm-plugin</id>
     <name>Options completion plugin</name>
-    <version>0.0.0</version>
+    <version>0.0.1</version>
     <vendor email="ouzo-framework@googlegroups.com" url="http://ouzoframework.org/">Ouzo contributors</vendor>
 
     <description><![CDATA[
 <h1>Options completion plugin</h1>
+<br/>
 
+Parses phpDocumentor's hash description (https://github.com/phpDocumentor/fig-standards/blob/master/proposed/phpdoc.md#7-describing-hashes) and shows supported keys.
+
+<br/>
 <h2>Features:</h2>
+<br/>
 <ul>
     <li>Complete array keys for function parameters</li>
 </ul>
