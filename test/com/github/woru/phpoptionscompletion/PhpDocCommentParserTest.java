@@ -33,7 +33,7 @@ public class PhpDocCommentParserTest {
                 "  } \n" +
                 "  @param string $param2 Array structure to count the elements of. \n" +
                 "  @param array $options2 {\n" +
-                "      @var int   $size Whether this element is required\n" +
+                "      @var int   $size\n" +
                 "      @var string $name The display name for this element\n" +
                 "  }";
 

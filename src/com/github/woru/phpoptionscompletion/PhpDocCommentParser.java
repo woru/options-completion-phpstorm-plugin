@@ -9,7 +9,7 @@ import static com.google.common.collect.Maps.newHashMap;
 
 public class PhpDocCommentParser {
     private static final Pattern paramPattern = Pattern.compile("(?:@param\\s+array\\s+\\$\\w+\\s+\\{([^}]+)\\})|(?:@param[^}\n]+)");
-    private static final Pattern optionPattern = Pattern.compile("@var\\s+(\\w+)\\s+\\$(\\w+)[^\n]+");
+    private static final Pattern optionPattern = Pattern.compile("@var\\s+(\\w+)\\s+\\$(\\w+)[^\n]*");
 
     public Map<Integer, OptionsParam> parse(String comment) {
         int position = 0;
