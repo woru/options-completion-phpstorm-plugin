@@ -1,7 +1,7 @@
 <idea-plugin version="2" url="https://github.com/woru/options-completion-phpstorm-plugin">
     <id>com.github.woru.options-completion-phpstorm-plugin</id>
     <name>Options completion plugin</name>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <vendor email="ouzo-framework@googlegroups.com" url="http://ouzoframework.org/">Ouzo contributors</vendor>
 
     <description><![CDATA[

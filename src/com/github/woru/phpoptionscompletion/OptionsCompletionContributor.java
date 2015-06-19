@@ -47,8 +47,9 @@ public class OptionsCompletionContributor extends CompletionContributor {
         PsiElement resolvedClass = classReference.resolve();
         Method method = (Method) resolvedClass;
         PhpDocComment docComment = method.getDocComment();
-
-        addCompletionForOptions(result, element, givenParameters, docComment.getText());
+        if (docComment != null) {
+            addCompletionForOptions(result, element, givenParameters, docComment.getText());
+        }
     }
 
     private void addCompletionForFunctionOptions(FunctionReference function, PsiElement element, PsiElement[] givenParameters, CompletionResultSet result) {
