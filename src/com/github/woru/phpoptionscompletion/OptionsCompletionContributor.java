@@ -44,11 +44,15 @@ public class OptionsCompletionContributor extends CompletionContributor {
 
     private void addCompletionForConstructorOptions(NewExpression newExpression, PsiElement element, PsiElement[] givenParameters, CompletionResultSet result) {
         ClassReference classReference = newExpression.getClassReference();
-        PsiElement resolvedClass = classReference.resolve();
-        Method method = (Method) resolvedClass;
-        PhpDocComment docComment = method.getDocComment();
-        if (docComment != null) {
-            addCompletionForOptions(result, element, givenParameters, docComment.getText());
+        if (classReference != null) {
+            PsiElement resolvedClass = classReference.resolve();
+            Method method = (Method) resolvedClass;
+            if (method != null) {
+                PhpDocComment docComment = method.getDocComment();
+                if (docComment != null) {
+                    addCompletionForOptions(result, element, givenParameters, docComment.getText());
+                }
+            }
         }
     }
 
@@ -74,7 +78,7 @@ public class OptionsCompletionContributor extends CompletionContributor {
                 if (optionsParam != null) {
                     Map<String, String> options = optionsParam.getOptions();
                     for (String name : Sets.difference(options.keySet(), getAllKeys(arrayCreation))) {
-                        result.addElement(LookupElementBuilder.create(name));
+                        result.addElement(LookupElementBuilder.create(name).withTypeText(options.get(name)));
                     }
                 }
             }
