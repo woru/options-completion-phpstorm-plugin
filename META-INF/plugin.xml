@@ -1,7 +1,7 @@
 <idea-plugin version="2" url="https://github.com/woru/options-completion-phpstorm-plugin">
     <id>com.github.woru.options-completion-phpstorm-plugin</id>
     <name>Options completion plugin</name>
-    <version>0.0.4</version>
+    <version>0.0.5</version>
     <vendor email="ouzo-framework@googlegroups.com" url="http://ouzoframework.org/">Ouzo contributors</vendor>
 
     <description><![CDATA[
@@ -14,7 +14,7 @@ Parses phpDocumentor's hash description (https://github.com/phpDocumentor/fig-st
 <h2>What's new:</h2>
 <br/>
 <ul>
-    <li>Shows elements type in completion</li>
+    <li>Bug fixes</li>
 </ul>
 
 <br/>
@@ -22,6 +22,7 @@ Parses phpDocumentor's hash description (https://github.com/phpDocumentor/fig-st
 <br/>
 <ul>
     <li>Complete array keys for function parameters</li>
+    <li>Show elements type in completion</li>
 </ul>
     ]]></description>
 

@@ -45,15 +45,27 @@ public class OptionsCompletionContributor extends CompletionContributor {
     private void addCompletionForConstructorOptions(NewExpression newExpression, PsiElement element, PsiElement[] givenParameters, CompletionResultSet result) {
         ClassReference classReference = newExpression.getClassReference();
         if (classReference != null) {
-            PsiElement resolvedClass = classReference.resolve();
-            Method method = (Method) resolvedClass;
-            if (method != null) {
-                PhpDocComment docComment = method.getDocComment();
+            PsiElement resolvedReference = classReference.resolve();
+            Method constructor =  resolveConstructor(resolvedReference);
+            if (constructor != null) {
+                PhpDocComment docComment = constructor.getDocComment();
                 if (docComment != null) {
                     addCompletionForOptions(result, element, givenParameters, docComment.getText());
                 }
             }
         }
+    }
+
+    private Method resolveConstructor(PsiElement resolvedReference) {
+        if (resolvedReference instanceof Method) {
+            return (Method) resolvedReference;
+        }
+
+        if (resolvedReference instanceof PhpClass) {
+            PhpClass phpClass = (PhpClass) resolvedReference;
+            return phpClass.getConstructor();
+        }
+        return null;
     }
 
     private void addCompletionForFunctionOptions(FunctionReference function, PsiElement element, PsiElement[] givenParameters, CompletionResultSet result) {
