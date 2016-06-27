@@ -9,12 +9,27 @@ import static org.junit.Assert.assertEquals;
 
 public class PhpDocCommentParserTest {
     @Test
-    public void parseSingleOptionsParameter() {
+    public void parseSingleOptionsParameterDeclaredWithVarAnnotation() {
         String comment = " Initializes this class with the given options.\n" +
                 " \n" +
                 "  @param array $options {\n" +
                 "      @var bool   $required Whether this element is required\n" +
                 "      @var string $label    The display name for this element\n" +
+                "  }";
+
+        Map<Integer, OptionsParam> optionsParams = new PhpDocCommentParser().parse(comment);
+
+        assertEquals(1, optionsParams.size());
+        assertEquals(new OptionsParam(0, ImmutableMap.of("required", "bool", "label", "string")), optionsParams.get(0));
+    }
+
+    @Test
+    public void parseSingleOptionsParameterDeclaredWithTypeAnnotation() {
+        String comment = " Initializes this class with the given options.\n" +
+                " \n" +
+                "  @param array $options {\n" +
+                "      @type bool   $required Whether this element is required\n" +
+                "      @type string $label    The display name for this element\n" +
                 "  }";
 
         Map<Integer, OptionsParam> optionsParams = new PhpDocCommentParser().parse(comment);
@@ -42,6 +57,20 @@ public class PhpDocCommentParserTest {
         assertEquals(2, optionsParams.size());
         assertEquals(new OptionsParam(1, ImmutableMap.of("required", "bool", "label", "string")), optionsParams.get(1));
         assertEquals(new OptionsParam(3, ImmutableMap.of("size", "int", "name", "string")), optionsParams.get(3));
+    }
+
+    @Test
+    public void parseMultipleOptionsParameterWithMultilineDescription() {
+        String comment = " Initializes this class with the given options.\n" +
+                "  @param array $options2 {\n" +
+                "      @var int   $size description\n description line2\n" +
+                "      @var string $name The display name for this element\nor something else\n" +
+                "  }";
+
+        Map<Integer, OptionsParam> optionsParams = new PhpDocCommentParser().parse(comment);
+
+        assertEquals(1, optionsParams.size());
+        assertEquals(new OptionsParam(0, ImmutableMap.of("size", "int", "name", "string")), optionsParams.get(0));
     }
 
 }
