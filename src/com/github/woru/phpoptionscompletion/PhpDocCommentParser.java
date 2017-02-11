@@ -1,19 +1,18 @@
 package com.github.woru.phpoptionscompletion;
 
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.google.common.collect.Maps.newHashMap;
-
 public class PhpDocCommentParser {
     private static final Pattern paramPattern = Pattern.compile("(?:@param\\s+array\\s+\\$\\w+\\s+\\{([^}]+)\\})|(?:@param[^}\n]+)");
-    private static final Pattern optionPattern = Pattern.compile("@(?:var|type)\\s+(\\w+)\\s+\\$(\\w+)[^\n]*");
+    private static final Pattern optionPattern = Pattern.compile("@(?:var|type)\\s+(\\w+(?:\\|\\w+)*)\\s+\\$(\\w+)[^\n]*");
 
     public Map<Integer, OptionsParam> parse(String comment) {
         int position = 0;
-        Map<Integer, OptionsParam> optionsParams = newHashMap();
+        Map<Integer, OptionsParam> optionsParams = new HashMap<Integer, OptionsParam>();
         Matcher matcher = paramPattern.matcher(comment);
         while (matcher.find()) {
             String optionsString = matcher.group(1);
@@ -27,7 +26,7 @@ public class PhpDocCommentParser {
     }
 
     private Map<String, String> parseOptions(String optionsString) {
-        Map<String, String> options = newHashMap();
+        Map<String, String> options = new HashMap<String, String>();
         if (optionsString == null) {
             return options;
         }

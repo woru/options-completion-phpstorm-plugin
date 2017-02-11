@@ -73,4 +73,33 @@ public class PhpDocCommentParserTest {
         assertEquals(new OptionsParam(0, ImmutableMap.of("size", "int", "name", "string")), optionsParams.get(0));
     }
 
+    @Test
+    public void parseMultiTypeParameterDeclaredWithVarAnnotation() {
+        String comment = " Initializes this class with the given options.\n" +
+                " \n" +
+                "  @param array $options {\n" +
+                "      @var bool   $required Whether this element is required\n" +
+                "      @var string|Description $label\n" +
+                "  }";
+
+        Map<Integer, OptionsParam> optionsParams = new PhpDocCommentParser().parse(comment);
+
+        assertEquals(1, optionsParams.size());
+        assertEquals(new OptionsParam(0, ImmutableMap.of("required", "bool", "label", "string|Description")), optionsParams.get(0));
+    }
+
+    @Test
+    public void parseMultiTypeParameterDeclaredWithThreeTypes() {
+        String comment = " Initializes this class with the given options.\n" +
+                " \n" +
+                "  @param array $options {\n" +
+                "      @var bool   $required Whether this element is required\n" +
+                "      @var string|Description|int $label\n" +
+                "  }";
+
+        Map<Integer, OptionsParam> optionsParams = new PhpDocCommentParser().parse(comment);
+
+        assertEquals(1, optionsParams.size());
+        assertEquals(new OptionsParam(0, ImmutableMap.of("required", "bool", "label", "string|Description|int")), optionsParams.get(0));
+    }
 }

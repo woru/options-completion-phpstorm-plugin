@@ -17,10 +17,10 @@ import com.jetbrains.php.lang.psi.resolve.types.PhpType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import static com.google.common.collect.Sets.newHashSet;
 
 public class OptionsCompletionContributor extends CompletionContributor {
     @Override
@@ -70,12 +70,15 @@ public class OptionsCompletionContributor extends CompletionContributor {
 
     private void addCompletionForFunctionOptions(FunctionReference function, PsiElement element, PsiElement[] givenParameters, CompletionResultSet result) {
         PhpIndex phpIndex = PhpIndex.getInstance(element.getProject());
-        Collection<? extends PhpNamedElement> bySignature = phpIndex.getBySignature(function.getSignature());
-        if (!bySignature.isEmpty()) {
-            PhpNamedElement first = bySignature.iterator().next();
-            PhpDocComment docComment = first.getDocComment();
-            if (docComment != null) {
-                addCompletionForOptions(result, element, givenParameters, docComment.getText());
+        String signature = function.getSignature();
+        String[] variants = signature.split("\\|");
+        for (String variant : variants) {
+            Collection<? extends PhpNamedElement> bySignature = phpIndex.getBySignature(variant);
+            for (PhpNamedElement phpNamedElement : bySignature) {
+                PhpDocComment docComment = phpNamedElement.getDocComment();
+                if (docComment != null) {
+                    addCompletionForOptions(result, element, givenParameters, docComment.getText());
+                }
             }
         }
     }
@@ -98,7 +101,7 @@ public class OptionsCompletionContributor extends CompletionContributor {
     }
 
     private Set<String> getAllKeys(ArrayCreationExpression arrayCreation) {
-        Set<String> keys = newHashSet();
+        Set<String> keys = new HashSet<String>();
         ArrayHashElement[] hashElements = PsiTreeUtil.getChildrenOfType(arrayCreation, ArrayHashElement.class);
         if (hashElements == null) {
             return keys;
